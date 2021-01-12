@@ -11,7 +11,7 @@ include $(TOPDIR)/../package/gluon.mk
 
 define Package/ffda-gluon-usteer
   TITLE:=Usteer
-  DEPENDS:=+gluon-core 
+  DEPENDS:=+gluon-core +ffda-gluon-usteer
 endef
 
 define Package/ffda-gluon-usteer/description
