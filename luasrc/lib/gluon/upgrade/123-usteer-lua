@@ -3,7 +3,7 @@
 local site = require 'gluon.site'
 local uci = require('simple-uci').cursor()
 
-local dns = site.dns({})
+local usteer = site.usteer({})
 
 -- Remove usteer config
 local usteer_section = uci:get_first('usteer', 'usteer')
@@ -17,7 +17,7 @@ end)
 
 -- Create usteer configuration
 uci:section('usteer', 'usteer', 'usteer', {
-	
+	enable = usteer.enabled,
 })
 
 
