@@ -1,0 +1,26 @@
+#!/usr/bin/lua
+
+local site = require 'gluon.site'
+local uci = require('simple-uci').cursor()
+
+local dns = site.dns({})
+
+-- Remove usteer config
+local usteer_section = uci:get_first('usteer', 'usteer')
+if usteer_section ~= nil then
+	uci:delete('usteer', usteer_section)
+end
+
+uci:foreach('usteer', 'zone', function(zone)
+	uci:delete('usteer', zone['.name'])
+end)
+
+-- Create usteer configuration
+uci:section('usteer', 'usteer', 'usteer', {
+	
+})
+
+
+
+
+uci:commit('usteer')
