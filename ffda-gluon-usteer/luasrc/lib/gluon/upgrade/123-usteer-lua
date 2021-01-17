@@ -15,7 +15,7 @@ uci:foreach('usteer', 'zone', function(zone)
 	uci:delete('usteer', zone['.name'])
 end)
 
--- Create usteer configuration
+-- Create usteer config
 uci:section('usteer', 'usteer', 'usteer', {
 	enable = usteer.enabled,
 })
