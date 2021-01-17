@@ -1,26 +1,21 @@
 #!/usr/bin/lua
-
-local site = require 'gluon.site'
-local uci = require('simple-uci').cursor()
-
-local usteer = site.usteer({})
-
--- Remove usteer config
-local usteer_section = uci:get_first('usteer', 'usteer')
-if usteer_section ~= nil then
-	uci:delete('usteer', usteer_section)
-end
-
-uci:foreach('usteer', 'zone', function(zone)
-	uci:delete('usteer', zone['.name'])
-end)
-
--- Create usteer config
-uci:section('usteer', 'usteer', 'usteer', {
-	enable = usteer.enabled,
+local t=require'gluon.site'
+local e=require('simple-uci').cursor()
+local a=t.usteer({})
+local t=e:get_first('usteer','usteer')
+e:section('usteer','usteer','usteer',{
+enable=a.enabled,
+network='mesh',
+syslog=1,
+debug_level=2,
 })
+e:commit('usteer')
 
-
-
-
-uci:commit('usteer')
+if(a.enabled == true)
+then
+os.execute('/etc/init.d/usteer enable')
+os.execute('/etc/init.d/usteer start')
+else
+os.execute('/etc/init.d/usteer stop')
+os.execute('/etc/init.d/usteer disable')
+end
