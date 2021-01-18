@@ -1,21 +1,12 @@
 #!/usr/bin/lua
-local t=require'gluon.site'
-local e=require('simple-uci').cursor()
-local a=t.usteer({})
-local t=e:get_first('usteer','usteer')
-e:section('usteer','usteer','usteer',{
-enable=a.enabled,
-network='mesh',
-syslog=1,
-debug_level=2,
-})
-e:commit('usteer')
+local siteDict = require'gluon.site'    
+local uciToSet = require('simple-uci').cursor()
+local enableStatus = siteDict.usteer({})
 
-if(a.enabled == true)
-then
-os.execute('/etc/init.d/usteer enable')
-os.execute('/etc/init.d/usteer start')
-else
-os.execute('/etc/init.d/usteer stop')
-os.execute('/etc/init.d/usteer disable')
-end
+uciToSet:section('usteer','usteer','usteer',{
+    enabled = enableStatus.enabled,
+    network = 'client',
+    syslog = 1,
+    debug_level = 2,
+})
+uciToSet:commit('usteer')
